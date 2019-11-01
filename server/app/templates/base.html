@@ -1,0 +1,16 @@
+<html>
+<head>
+        {{ dropzone.load_css() }}
+</head>
+<body>
+    {% if nofile %}
+        {{ dropzone.load_js() }}
+        {{ dropzone.create(action='/upload') }}
+    {% else %}
+        <div id="result">
+            {{ result }}
+        </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</body>
+</html>

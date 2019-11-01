@@ -1,6 +1,7 @@
 # import TernaryHeap
 from heapq import heapify, heappush, heappop
 from collections import Counter
+import os
 
 """Implementation of ternary heap for Huffman coding"""
 class HeapNode:
@@ -88,28 +89,61 @@ def decode(code, weights):
 #         merged.right = node3
 
 #         heappush(self.heap, merged)
-txt = "This is an example for Huffman encoding"
+def process_file(infile):
+    # do some validation and whatnot
+
+    # do the testing steps below
+    f = open(infile, "r")
+    txt = f.read()
+    weighted = get_weights(Counter(txt))
+
+    # output some results for testing
+    print("Symbol\tWeight\tHuffman Code")
+    count = 0
+    for p in weighted:
+        count = count + int(len(p[1]))
+        print("%s\t%s\t%s" % (p[0], Counter(txt)[p[0]], p[1]))
+
+    print(count)
+    f.close()
+    # TODO: code the rest of the logic to finish DNA-encoding
+    s1 = encode(txt, weighted)
+    # finally, output the resulting file
+    out = open('out.txt', 'w')
+    out.write(str(s1))
+    out.close()
+
+
+os.chdir('../files')
+
+targetfile = 'test.txt'
+process_file(targetfile)
+print('processed a file')
+
+
+
+"""
+# some other stuff, for testing or just eventual deletion
 bg = "Birney and Goldman"
-
-symb2freq = Counter(txt)
-
-
+symb2freq = Counter(bg)
 huff = get_weights(symb2freq)
-print("Symbol\tWeight\tHuffman Code")
+
+# print("Symbol\tWeight\tHuffman Code")
 count = 0
 for p in huff:
     count = count + int(len(p[1]))
-    print("%s\t%s\t%s" % (p[0], symb2freq[p[0]], p[1]))
+#     print("%s\t%s\t%s" % (p[0], symb2freq[p[0]], p[1]))
 
-print(count)
-s1 = encode(txt, huff)
+# print(count)
+s1 = encode(bg, huff)
 print(s1)
 d1 = decode(s1, huff)
 print(d1)
 len_s1 = calc_ternary(count)
-print('in ternary: ' + calc_ternary(count))
+# print('in ternary: ' + calc_ternary(count))
 
 while len(len_s1) < 20:
     len_s1 = '0' + len_s1
 
 print(len_s1)
+"""
